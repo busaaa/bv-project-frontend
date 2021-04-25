@@ -1,11 +1,12 @@
 import { Route, Switch, Redirect } from "react-router-dom";
 import AllData from "./pages/AllData";
+import NotFound from "./pages/NotFound";
 import Layout from "./components/layout/Layout";
 
-const backendUrl = "localhost:4000";
+const backendUrl = "http://localhost:4000";
 const sportsUrl = "/sports";
 const eventsUrl = "/sports/:sportId";
-const outcomesUrl = "/sports/:sportId/events/:eventId"
+const outcomesUrl = "/sports/:sportId/events/:eventId";
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
         </Route>
         <Route path={outcomesUrl}>
           <AllData backendUrl={backendUrl} type="outcomes" />
+        </Route>
+        <Route path='*'>
+          <NotFound />
         </Route>
       </Switch>
     </Layout>

@@ -7,7 +7,7 @@ const EventItem = (props) => {
     <Card>
       <div className={classes.content}>
         <h3>{props.desc}</h3>
-        <h3>{props.compDesc}</h3>
+        <h4>{props.compDesc}</h4>
       </div>
       <div className={classes.actions}>
         <Link className={classes['btn--flat']} to={`/sports/${props.sportId}/events/${props.id}`}>See outcomes</Link>

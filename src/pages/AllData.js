@@ -3,46 +3,53 @@ import { useParams, useHistory } from "react-router-dom";
 import SportItem from "../components/items/SportItem";
 import EventItem from "../components/items/EventItem";
 import OutcomeItem from "../components/items/OutcomeItem";
-import classes from "./../components/items/Item.module.css"
+import classes from "./AllData.module.css";
 
 const AllData = (props) => {
   const params = useParams();
   const history = useHistory();
 
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [loadedData, setLoadedData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadedData, setLoadedData] = useState([]);
+  const [httpError, setHttpError] = useState();
 
-  // useEffect(() => {
-  //   setIsLoading(true);
+  useEffect(() => {
+    setIsLoading(true);
 
-  //   fetch(`${props.backendUrl}/${window.location.pathname}`)
-  //     .then((response) => {
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       setIsLoading(false);
-  //       setLoadedData(data);
-  //     });
-  // }, [props]);
+    fetch(`${props.backendUrl}${window.location.pathname}`)
+      .then((response) => {
+        console.log("bent");
+        if (!response.ok) {
+          throw new Error("Something went wrong!");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setIsLoading(false);
+        setLoadedData(data);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setHttpError(error.message);
+      });
+  }, [props]);
 
-  // if (isLoading) {
-  //   return (
-  //     <section>
-  //       <p>LOADING...</p>
-  //     </section>
-  //   );
-  // }
+  if (isLoading) {
+    return (
+      <section className={classes.loading}>
+        <p>LOADING...</p>
+      </section>
+    );
+  }
 
-  const loadedData = [
-    {
-      id: 11,
-      sport_id: 1,
-      desc: "Event description",
-      comp_desc: "Competition description",
-      d: "Something",
-      fdp: "1.25",
-    },
-  ];
+  if (httpError) {
+    return (
+      <section className={classes.error}>
+        <p>{httpError}</p>
+      </section>
+    );
+  }
 
   if (props.type === "sports") {
     return (
@@ -68,7 +75,9 @@ const AllData = (props) => {
             />
           );
         })}
-        <button className={classes['btn--flat']}onClick={history.goBack}>Back</button>
+        <button className={classes["btn--flat"]} onClick={history.goBack}>
+          Back
+        </button>
       </section>
     );
   } else if (props.type === "outcomes") {
@@ -80,7 +89,9 @@ const AllData = (props) => {
             <OutcomeItem key={data.id} id={data.id} d={data.d} fdp={data.fdp} />
           );
         })}
-        <button className={classes['btn--flat']} onClick={history.goBack}>Back</button>
+        <button className={classes["btn--flat"]} onClick={history.goBack}>
+          Back
+        </button>
       </section>
     );
   }
