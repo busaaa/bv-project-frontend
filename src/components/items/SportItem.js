@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Card from "./../ui/Card";
+import Card from "../ui/Card";
 import classes from "./Item.module.css";
 import sportsImage from "../../sports_image.jpg";
 
