@@ -20,6 +20,10 @@
   padding: 1rem;
 }
 
+.content-left {
+  padding: 1rem;
+}
+
 .content h3 {
   font-size: 1.25rem;
   color: #2c292b;
@@ -43,4 +47,23 @@
 .actions button:hover,
 .actions button:active {
   background-color: #ffe2ed;
+}
+
+.btn--flat {
+  cursor: pointer;
+  font: inherit;
+  color: white;
+  border: none;
+  background-color: #77002e;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+}
+
+.badge {
+  background-color: #77002e;
+  color: white;
+  border-radius: 12px;
+  padding: 0 1rem;
+  margin-left: 0.5rem;
 }

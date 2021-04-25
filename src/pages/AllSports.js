@@ -2,37 +2,38 @@ import { useState, useEffect } from "react";
 import SportItem from "../components/sports/SportItem";
 
 const AllSports = (props) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadedSports, setLoadedSports] = useState([]);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [loadedSports, setLoadedSports] = useState([]);
 
-  useEffect(() => {
-    setIsLoading(true);
-    fetch(`${props.backendUrl}/sports`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setIsLoading(false);
-        setLoadedSports(data);
-      });
-  }, [props]);
+  // useEffect(() => {
+  //   setIsLoading(true);
 
-  if (isLoading) {
-    return (
-      <section>
-        <p>LOADING...</p>
-      </section>
-    );
-  }
+  //   fetch(`${props.backendUrl}/sports`)
+  //     .then((response) => {
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       setIsLoading(false);
+  //       setLoadedSports(data);
+  //     });
+  // }, [props]);
+
+  // if (isLoading) {
+  //   return (
+  //     <section>
+  //       <p>LOADING...</p>
+  //     </section>
+  //   );
+  // }
+
+  const loadedSports = [{ id: 1, desc: "Description Sport 1" }];
 
   return (
     <section>
       <h1>All sports</h1>
-      <ul>
         {loadedSports.map((sport) => {
-          return <SportItem key={sport.id} desc={sport.desc} id={sport.id} />;
+          return <SportItem key={sport.id} desc={sport.desc} sportId={sport.id} />;
         })}
-      </ul>
     </section>
   );
 };
