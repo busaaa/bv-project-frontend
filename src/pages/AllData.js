@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import SportItem from "../components/items/SportItem";
 import EventItem from "../components/items/EventItem";
 import OutcomeItem from "../components/items/OutcomeItem";
@@ -7,14 +7,13 @@ import classes from "./AllData.module.css";
 
 const AllData = (props) => {
   const params = useParams();
-  const history = useHistory();
   const location = useLocation();
 
   const [isLoading, setIsLoading] = useState(true);
   const [loadedData, setLoadedData] = useState([]);
   const [httpError, setHttpError] = useState();
-  const [marketDesc, setMarketDesc] = useState('');
-  const [marketPtDesc, setMarketPtDesc] = useState('');
+  const [marketDesc, setMarketDesc] = useState("");
+  const [marketPtDesc, setMarketPtDesc] = useState("");
 
   useEffect(() => {
     setIsLoading(true);
@@ -33,8 +32,8 @@ const AllData = (props) => {
         setIsLoading(false);
         setLoadedData(data);
         if (props.type === "outcomes" && data.length > 0) {
-          setMarketDesc(data[0].market.desc)
-          setMarketPtDesc(data[0].market.pt_desc)
+          setMarketDesc(data[0].market.desc);
+          setMarketPtDesc(data[0].market.pt_desc);
         }
       })
       .catch((error) => {
@@ -79,7 +78,9 @@ const AllData = (props) => {
   } else if (props.type === "events") {
     return (
       <section>
-        <h1>All {props.type} ({location.sportData.desc})</h1>
+        <h1>
+          All {props.type} ({location.sportData.desc})
+        </h1>
         {loadedData.map((data) => {
           return (
             <EventItem
@@ -88,27 +89,38 @@ const AllData = (props) => {
               id={data.id}
               desc={data.desc}
               compDesc={data.comp_desc}
+              sportDataDesc={location.sportData.desc}
             />
           );
         })}
-        <button className={classes["btn--flat"]} onClick={history.goBack}>
+        <Link className={classes["btn--flat"]} to="/sports">
           Back
-        </button>
+        </Link>
       </section>
     );
   } else if (props.type === "outcomes") {
     return (
       <section>
-        <h1>All {props.type} ({location.eventData.desc})</h1>
-        <h3>All {marketDesc} - {marketPtDesc}</h3>
+        <h1>
+          All {props.type} ({location.data.eventDesc})
+        </h1>
+        <h3>
+          All {marketDesc} - {marketPtDesc}
+        </h3>
         {loadedData.map((data) => {
           return (
             <OutcomeItem key={data.id} id={data.id} d={data.d} fdp={data.fdp} />
           );
         })}
-        <button className={classes["btn--flat"]} onClick={history.goBack}>
+        <Link
+          className={classes["btn--flat"]}
+          to={{
+            pathname: `/sports/${params.sportId}`,
+            sportData: { desc: location.data.sportDataDesc },
+          }}
+        >
           Back
-        </button>
+        </Link>
       </section>
     );
   }

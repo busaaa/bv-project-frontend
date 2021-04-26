@@ -14,7 +14,7 @@ const EventItem = (props) => {
           className={classes["btn--flat"]}
           to={{
             pathname: `/sports/${props.sportId}/events/${props.id}`,
-            eventData: {desc: props.desc},
+            data: {eventDesc: props.desc, sportDataDesc: props.sportDataDesc},
           }}
         >
           See outcomes
