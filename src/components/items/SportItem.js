@@ -13,7 +13,15 @@ const SportItem = (props) => {
         <h3>{props.desc}</h3>
       </div>
       <div className={classes.actions}>
-        <Link className={classes['btn--flat']} to={`/sports/${props.sportId}`}>See events</Link>
+        <Link
+          className={classes["btn--flat"]}
+          to={{
+            pathname: `/sports/${props.sportId}`,
+            sportData: { desc: props.desc },
+          }}
+        >
+          See events
+        </Link>
       </div>
     </Card>
   );

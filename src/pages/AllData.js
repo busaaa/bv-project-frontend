@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import SportItem from "../components/items/SportItem";
 import EventItem from "../components/items/EventItem";
 import OutcomeItem from "../components/items/OutcomeItem";
@@ -8,26 +8,34 @@ import classes from "./AllData.module.css";
 const AllData = (props) => {
   const params = useParams();
   const history = useHistory();
+  const location = useLocation();
 
   const [isLoading, setIsLoading] = useState(true);
   const [loadedData, setLoadedData] = useState([]);
   const [httpError, setHttpError] = useState();
+  const [marketDesc, setMarketDesc] = useState('');
+  const [marketPtDesc, setMarketPtDesc] = useState('');
 
   useEffect(() => {
     setIsLoading(true);
 
     fetch(`${props.backendUrl}${window.location.pathname}`)
       .then((response) => {
-        console.log("bent");
+        if (response.status === 404) {
+          throw new Error("Requested data not found!");
+        }
         if (!response.ok) {
           throw new Error("Something went wrong!");
         }
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         setIsLoading(false);
         setLoadedData(data);
+        if (props.type === "outcomes" && data.length > 0) {
+          setMarketDesc(data[0].market.desc)
+          setMarketPtDesc(data[0].market.pt_desc)
+        }
       })
       .catch((error) => {
         setIsLoading(false);
@@ -51,6 +59,14 @@ const AllData = (props) => {
     );
   }
 
+  if (loadedData.length === 0) {
+    return (
+      <section className={classes.error}>
+        <p>NO DATA FOUND</p>
+      </section>
+    );
+  }
+
   if (props.type === "sports") {
     return (
       <section>
@@ -63,7 +79,7 @@ const AllData = (props) => {
   } else if (props.type === "events") {
     return (
       <section>
-        <h1>All {props.type}</h1>
+        <h1>All {props.type} ({location.sportData.desc})</h1>
         {loadedData.map((data) => {
           return (
             <EventItem
@@ -83,7 +99,8 @@ const AllData = (props) => {
   } else if (props.type === "outcomes") {
     return (
       <section>
-        <h1>All {props.type}</h1>
+        <h1>All {props.type} ({location.eventData.desc})</h1>
+        <h3>All {marketDesc} - {marketPtDesc}</h3>
         {loadedData.map((data) => {
           return (
             <OutcomeItem key={data.id} id={data.id} d={data.d} fdp={data.fdp} />

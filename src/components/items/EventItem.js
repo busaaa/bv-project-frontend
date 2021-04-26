@@ -10,7 +10,15 @@ const EventItem = (props) => {
         <h4>{props.compDesc}</h4>
       </div>
       <div className={classes.actions}>
-        <Link className={classes['btn--flat']} to={`/sports/${props.sportId}/events/${props.id}`}>See outcomes</Link>
+        <Link
+          className={classes["btn--flat"]}
+          to={{
+            pathname: `/sports/${props.sportId}/events/${props.id}`,
+            eventData: {desc: props.desc},
+          }}
+        >
+          See outcomes
+        </Link>
       </div>
     </Card>
   );
