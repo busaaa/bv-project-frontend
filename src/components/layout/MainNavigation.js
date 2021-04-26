@@ -3,7 +3,7 @@ import classes from "./MainNavigation.module.css";
 
 const MainNavigation = () => {
   return (
-    <header className={classes.header}>
+    <header className={classes.header} data-testid='main-nav-test-1'>
       <Link to="/">
         <span className={classes.logo}>BV project</span>
       </Link>

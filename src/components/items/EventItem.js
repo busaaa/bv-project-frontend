@@ -5,11 +5,11 @@ import classes from "./Item.module.css";
 const EventItem = (props) => {
   return (
     <Card>
-      <div className={classes.content}>
+      <div data-testid="event-item-test-1" className={classes.content}>
         <h3>{props.desc}</h3>
         <h4>{props.compDesc}</h4>
       </div>
-      <div className={classes.actions}>
+      <div data-testid="event-item-test-2" className={classes.actions}>
         <Link
           className={classes["btn--flat"]}
           to={{
