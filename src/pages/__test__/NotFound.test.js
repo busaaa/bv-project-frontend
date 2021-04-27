@@ -1,6 +1,6 @@
 import { BrowserRouter as Router } from "react-router-dom";
 import { render, screen, cleanup } from "@testing-library/react";
-import NotFound from "./../NotFound";
+import NotFound from "./../NotFound"; 
 
 afterEach(() => {
   cleanup();

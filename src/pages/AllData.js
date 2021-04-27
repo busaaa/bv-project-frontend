@@ -68,18 +68,20 @@ const AllData = (props) => {
 
   if (props.type === "sports") {
     return (
-      <section>
+      <section data-testid="sports-test-1">
         <h1>All {props.type}</h1>
         {loadedData.map((data) => {
           return <SportItem key={data.id} desc={data.desc} sportId={data.id} />;
         })}
       </section>
     );
-  } else if (props.type === "events") {
+  } 
+  
+  if (props.type === "events") {
     return (
-      <section>
+      <section data-testid="events-test-1">
         <h1>
-          All {props.type} ({location.sportData.desc})
+          All {props.type} {location.sportData ? `(${location.sportData.desc})` : ""}
         </h1>
         {loadedData.map((data) => {
           return (
@@ -89,7 +91,7 @@ const AllData = (props) => {
               id={data.id}
               desc={data.desc}
               compDesc={data.comp_desc}
-              sportDataDesc={location.sportData.desc}
+              sportDataDesc={location.sportData ? `(${location.sportData.desc})` : ""}
             />
           );
         })}
@@ -98,14 +100,16 @@ const AllData = (props) => {
         </Link>
       </section>
     );
-  } else if (props.type === "outcomes") {
+  } 
+  
+  if (props.type === "outcomes") {
     return (
       <section>
         <h1>
-          All {props.type} ({location.data.eventDesc})
+          All {props.type} {location.data ? `(${location.data.eventDesc})` : ""}
         </h1>
         <h3>
-          All {marketDesc} - {marketPtDesc}
+          {marketDesc} - {marketPtDesc}
         </h3>
         {loadedData.map((data) => {
           return (
@@ -116,7 +120,7 @@ const AllData = (props) => {
           className={classes["btn--flat"]}
           to={{
             pathname: `/sports/${params.sportId}`,
-            sportData: { desc: location.data.sportDataDesc },
+            sportData: location.data ? { desc:  location.data.eventDesc } : undefined
           }}
         >
           Back

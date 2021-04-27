@@ -32,15 +32,3 @@ test("renders data via props", () => {
   expect(SportItemElem2).toHaveTextContent(testDesc);
   expect(SportItemElem3).toHaveTextContent("See events");
 });
-
-test("checks links navigates away", () => {
-  const testSportId = 1;
-  render(
-    <Router>
-      <SportItem sportId={testSportId} />
-    </Router>
-  );
-  const SportItemElem3 = screen.getByTestId("sport-item-test-3");
-  expect(SportItemElem3).toHaveTextContent("See events");
-  
-});
